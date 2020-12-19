@@ -16,23 +16,28 @@ data.forEach(function(UFOSighting) {
         console.log(key, value);
     });
 });
-// Getting a reference to the button on the page
-var button = d3.select("filter-btn");
+// Select the button
+var button = d3.select("#filter-btn");
 
-// Getting a reference to the input element on the page 
-var inputField = d3.select("datetime");
-
-function handleClick() {
-    // We can use d3 to see the object that dispatched the event
-    console.log(d3.event.target);
+// implementing button fuction to 
+button.on("click", function() {
+    // clears the data of the current table        
+    tbody.html("");
     d3.event.preventDefault();
-    console.log(inputField.property("value"));
-    var filtered_table = tableData.filter(UFOSighting => UFOSighting.datetime===inputField.property("value"))
-    displayData(filtered_table)
+    var inputField = d3.select("#datetime");
+    var inputElement = inputField.property("value");
+    //console.log(inputElement);
+    // filter on selected date
+    var filteredData = data.filter(sighting => sighting.datetime === inputElement);   
+    console.log(filteredData)
 
-};
-button.on("click", handleClick)
-
-// Input fields can trigger a change event when new text is entered.
-inputField.on("change", handleClick)
-  
+    
+    // Distplay filtered tbale
+    filteredData.forEach((selection) => {
+        var row = tbody.append("tr");
+        Object.entries(selection).forEach(([key,value]) => {
+            var cell = row.append("td");
+            cell.text(value);
+        });
+    });      
+});
