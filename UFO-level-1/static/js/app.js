@@ -1,13 +1,13 @@
-// from data.js
+// set var = data array from data.js
 var tableData = data;
 
 // Get a reference to the table body
 var tbody = d3.select("tbody");
 
-// Console.log the UFO Sighting data from data.js
+// Console.log the data from data.js
 console.log(data);
 
-// loop through data array and append rows to javascript table
+// loopiing through data array and appending rows to javascript table
 data.forEach(function(UFOSighting) {
     console.log(UFOSighting);
     var row = tbody.append("tr");
@@ -16,23 +16,23 @@ data.forEach(function(UFOSighting) {
         console.log(key, value);
     });
 });
-// Select the button
+// Select the button from html code
 var button = d3.select("#filter-btn");
 
-// implementing button fuction to 
+// create button function to filter on datetime entr 
 button.on("click", function() {
-    // clears the data of the current table        
+    // clear current data to display filtered data        
     tbody.html("");
     d3.event.preventDefault();
     var inputField = d3.select("#datetime");
     var inputElement = inputField.property("value");
     //console.log(inputElement);
-    // filter on selected date
+    // filter on the inputed date
     var filteredData = data.filter(sighting => sighting.datetime === inputElement);   
     console.log(filteredData)
 
     
-    // Distplay filtered tbale
+    // Distplay filtered table
     filteredData.forEach((selection) => {
         var row = tbody.append("tr");
         Object.entries(selection).forEach(([key,value]) => {
